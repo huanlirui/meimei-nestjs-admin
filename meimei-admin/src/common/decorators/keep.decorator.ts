@@ -8,8 +8,7 @@
  * You can you up，no can no bb！！
  */
 
+import { SetMetadata } from '@nestjs/common';
+import { KEEP_KEY } from '../contants/decorator.contant';
 
-import { SetMetadata } from "@nestjs/common";
-import { KEEP_KEY } from "../contants/decorator.contant";
-
-export const Keep = () => SetMetadata(KEEP_KEY, true)
+export const Keep = () => SetMetadata(KEEP_KEY, true);

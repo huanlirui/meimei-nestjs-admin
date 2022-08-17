@@ -8,9 +8,8 @@
  * You can you up，no can no bb！！
  */
 
-
-import { applyDecorators, Type } from "@nestjs/common";
-import { ApiExtraModels, ApiOkResponse, getSchemaPath } from "@nestjs/swagger";
+import { applyDecorators, Type } from '@nestjs/common';
+import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 
 export enum typeEnum {
   'string' = 'string',
@@ -24,18 +23,19 @@ export enum typeEnum {
 }
 
 export const ApiDataResponse = <TModel extends Type<any>>(
-  type: typeEnum, model?: TModel,
+  type: typeEnum,
+  model?: TModel,
 ) => {
-  let applyDecoratorArr = []
-  let data: Object
+  const applyDecoratorArr = [];
+  let data: Object;
 
   switch (type) {
     case typeEnum.string:
     case typeEnum.number:
     case typeEnum.boolean:
       data = {
-        type: type
-      }
+        type: type,
+      };
       break;
     case typeEnum.stringArr:
     case typeEnum.numberArr:
@@ -43,24 +43,24 @@ export const ApiDataResponse = <TModel extends Type<any>>(
       data = {
         type: 'array',
         items: {
-          type: type.slice(0, -3)
-        }
-      }
+          type: type.slice(0, -3),
+        },
+      };
       break;
     case typeEnum.object:
-      if (!model) throw Error('返回值为typeEnum.object时请填写类型！')
-      applyDecoratorArr.push(ApiExtraModels(model))
+      if (!model) throw Error('返回值为typeEnum.object时请填写类型！');
+      applyDecoratorArr.push(ApiExtraModels(model));
       data = {
-        $ref: getSchemaPath(model)
-      }
+        $ref: getSchemaPath(model),
+      };
       break;
     case typeEnum.objectArr:
-      if (!model) throw Error('返回值为typeEnum.objectArr时请填写类型！')
-      applyDecoratorArr.push(ApiExtraModels(model))
+      if (!model) throw Error('返回值为typeEnum.objectArr时请填写类型！');
+      applyDecoratorArr.push(ApiExtraModels(model));
       data = {
         type: 'array',
-        items: { $ref: getSchemaPath(model) }
-      }
+        items: { $ref: getSchemaPath(model) },
+      };
     default:
       break;
   }
@@ -70,12 +70,12 @@ export const ApiDataResponse = <TModel extends Type<any>>(
         allOf: [
           {
             properties: {
-              data: data
+              data: data,
             },
           },
         ],
       },
-    })
-  )
-  return applyDecorators(...applyDecoratorArr)
+    }),
+  );
+  return applyDecorators(...applyDecoratorArr);
 };

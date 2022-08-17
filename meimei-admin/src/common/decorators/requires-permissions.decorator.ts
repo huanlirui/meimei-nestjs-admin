@@ -11,30 +11,33 @@
 https://docs.nestjs.com/openapi/decorators#decorators
 */
 
-import { SetMetadata } from "@nestjs/common"
-import { PERMISSION_KEY_METADATA } from "../contants/decorator.contant"
-import { LogicalEnum } from "../enums/logical.enum"
+import { SetMetadata } from '@nestjs/common';
+import { PERMISSION_KEY_METADATA } from '../contants/decorator.contant';
+import { LogicalEnum } from '../enums/logical.enum';
 
 export type PermissionObj = {
-  permissionArr: string[]
-  logical: LogicalEnum
-}
+  permissionArr: string[];
+  logical: LogicalEnum;
+};
 
-export const RequiresPermissions = (permissions: string | string[], logical: LogicalEnum = LogicalEnum.or) => {
+export const RequiresPermissions = (
+  permissions: string | string[],
+  logical: LogicalEnum = LogicalEnum.or,
+) => {
   let permissionObj: PermissionObj = {
     permissionArr: [],
-    logical
-  }
+    logical,
+  };
   if (typeof permissions === 'string') {
     permissionObj = {
       permissionArr: [permissions],
-      logical
-    }
+      logical,
+    };
   } else if (permissions instanceof Array) {
     permissionObj = {
       permissionArr: permissions,
-      logical
-    }
+      logical,
+    };
   }
-  return SetMetadata(PERMISSION_KEY_METADATA, permissionObj)
-}
+  return SetMetadata(PERMISSION_KEY_METADATA, permissionObj);
+};

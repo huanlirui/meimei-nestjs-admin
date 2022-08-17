@@ -8,7 +8,6 @@
  * You can you up，no can no bb！！
  */
 
-
 import {
   ExceptionFilter,
   Catch,
@@ -24,7 +23,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
-    const { status, result } = this.errorResult(exception)
+    const { status, result } = this.errorResult(exception);
     response.header('Content-Type', 'application/json; charset=utf-8');
     response.status(status).json(result);
   }
@@ -41,16 +40,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? (exception as ApiException).getErrCode()
         : status;
 
-    let message: string
+    let message: string;
     if (exception instanceof HttpException) {
-      const response = exception.getResponse()
-      message = (response as any).message ?? response
+      const response = exception.getResponse();
+      message = (response as any).message ?? response;
     } else {
-      message = `${exception}`
+      message = `${exception}`;
     }
     return {
       status,
-      result: AjaxResult.error(message, code)
-    }
+      result: AjaxResult.error(message, code),
+    };
   }
 }

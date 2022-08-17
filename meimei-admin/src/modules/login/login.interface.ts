@@ -9,6 +9,6 @@
  */
 
 interface Payload {
-    userId: number,
-    pv: number
+  userId: number;
+  pv: number;
 }
